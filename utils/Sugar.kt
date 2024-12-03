@@ -1,7 +1,8 @@
+package beaverlib.utils
+
 /**
  * Sugar is an object where we are adding convenience functions
  */
-package frc.engine.utils
 // File adapted from 2898's bpsrobotics engine
 import kotlin.math.*
 
