@@ -22,8 +22,10 @@ val Number.amps get() = Current(toDouble())
 
 /**
  * WARNING: IF YOU ARE USING THIS YOU ARE PROBABLY GOING TO BLOW SOMETHING UP
+ * Why do we have this in the codebase? please remove it; we're trying to avoid spaghetti
  */
 val Number.kiloAmps get() = Current(toDouble()*1000)
+
 
 //Destructors
 val Current.asMilliAmps get() = asAmps*1000

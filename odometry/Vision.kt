@@ -35,6 +35,11 @@ val aprilTags1: MutableList<AprilTag> = mutableListOf(
 val testLayout1 = AprilTagFieldLayout(aprilTags1,10.0,5.0)
 val aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile)
 
+/* Needs to be part of main season robot code, because it depends on robot-specific constants
+
+(Needs to import Constants.OdometryConstants.VisionDeviation)
+
+Good example code though...
 
 //TODO: Update for Photon
 class Vision (
@@ -65,3 +70,4 @@ class Vision (
         return Constants.OdometryConstants.VisionDeviation
     }
 }
+*/
