@@ -1,7 +1,7 @@
 //File adapted from 2898's code
-package com.team2898.engine.utils.async
+package frc.beaverlib.async
 
-import com.team2898.engine.utils.Symbol
+import frc.beaverlib.misc.Symbol
 
 class EventTarget<DataType> {
     private val listeners: MutableMap<Symbol, (ev: DataType) -> Unit> = mutableMapOf()

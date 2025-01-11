@@ -1,7 +1,7 @@
 //File adapted from 2898's code
-package com.team2898.engine.utils.async
+package frc.beaverlib.async
 
-import com.team2898.engine.utils.AggregateException
+import frc.beaverlib.async.AggregateException
 import edu.wpi.first.wpilibj.event.BooleanEvent
 import edu.wpi.first.wpilibj.event.EventLoop
 

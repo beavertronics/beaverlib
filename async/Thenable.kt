@@ -1,4 +1,4 @@
-package com.team2898.engine.utils.async
+package frc.beaverlib.async
 
 interface Thenable<T> {
     fun<N> then(success: (value: T) -> Promise<N>): Promise<N>
