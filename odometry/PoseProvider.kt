@@ -2,8 +2,6 @@ package beaverlib.odometry
 // File adapted from 2898's bpsrobotics engine
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Pose3d
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Distance
 import edu.wpi.first.util.sendable.Sendable
 import edu.wpi.first.util.sendable.SendableBuilder
 import edu.wpi.first.util.sendable.SendableRegistry
