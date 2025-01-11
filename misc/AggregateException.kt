@@ -1,4 +1,4 @@
-package com.team2898.engine.utils
+package frc.beaverlib.misc
 
 class AggregateException(message: String?, primary: Exception?, vararg others: Throwable) : Exception(message, primary) {
     init {
