@@ -1,13 +1,17 @@
 package beaverlib.controls
 
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
-import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.revrobotics.CANSparkLowLevel
-import com.revrobotics.CANSparkLowLevel.MotorType
-import com.revrobotics.CANSparkMax
 import beaverlib.utils.Units.Electrical.VoltageUnit
 import com.ctre.phoenix.motorcontrol.NeutralMode
-import com.revrobotics.CANSparkBase
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.revrobotics.spark.SparkBase
+import com.revrobotics.spark.SparkBase.PersistMode
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
+import com.revrobotics.spark.config.SparkBaseConfig
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode
+import com.revrobotics.spark.config.SparkMaxConfig
+
 
 interface BeaverMotorController {
     /** The percent output of the motor (-1.0.. 1.0 */
@@ -17,26 +21,24 @@ interface BeaverMotorController {
      *  (WARNING: May be unpredictable with non SparkMax controllers.)
      *  @param volts Voltage to run the motor at */
     fun setVoltage(volts : VoltageUnit)
-    fun restoreFactoryDefaults()
-    fun setCurrentLimit(currentLimit : Int)
-    var idleMode : BeaverIdleMode
+    fun configure(idleMode: BeaverIdleMode, currentLimit : Int)
 }
-enum class BeaverIdleMode(val SparkValue : CANSparkBase.IdleMode, val SRXValue : NeutralMode) {
-    UNSET(CANSparkBase.IdleMode.kCoast, NeutralMode.Coast),
-    BREAK(CANSparkBase.IdleMode.kBrake, NeutralMode.Brake),
-    COAST(CANSparkBase.IdleMode.kCoast, NeutralMode.Coast)}
+enum class BeaverIdleMode(val SparkValue : SparkBaseConfig.IdleMode, val SRXValue : NeutralMode) {
+    UNSET(SparkBaseConfig.IdleMode.kCoast, NeutralMode.Coast),
+    BREAK(SparkBaseConfig.IdleMode.kBrake, NeutralMode.Brake),
+    COAST(SparkBaseConfig.IdleMode.kCoast, NeutralMode.Coast)}
 
-class BeaverSparkMax(ID : Int, MotorType: CANSparkLowLevel.MotorType) : BeaverMotorController {
-    var motorController : CANSparkMax = CANSparkMax(ID, MotorType)
+class BeaverSparkMax(ID : Int, MotorType: SparkLowLevel.MotorType) : BeaverMotorController {
+    var motorController : SparkMax = SparkMax(ID, MotorType)
     override fun get() = motorController.get()
     override fun setVoltage(volts: VoltageUnit) = motorController.setVoltage(volts.asVolts)
-    override fun restoreFactoryDefaults() { motorController.restoreFactoryDefaults() }
-    override fun setCurrentLimit(currentLimit: Int) { motorController.setSmartCurrentLimit(currentLimit) }
-    override var idleMode: BeaverIdleMode = BeaverIdleMode.UNSET
-        set(value) {
-            motorController.idleMode = value.SparkValue
-            field = value
-        }
+    override fun configure(idleMode: BeaverIdleMode, currentLimit : Int) {
+        val sparkConfig : SparkMaxConfig = SparkMaxConfig();
+        sparkConfig.idleMode(IdleMode.kCoast);
+        sparkConfig.smartCurrentLimit(currentLimit)
+        // Don't persist parameters since it takes time and this change is temporary
+        motorController.configure(sparkConfig, SparkBase.ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
 }
 
 class BeaverTalonSRX(ID: Int) : BeaverMotorController {
@@ -44,11 +46,9 @@ class BeaverTalonSRX(ID: Int) : BeaverMotorController {
 
     override fun get() = motorController.motorOutputPercent
     override fun setVoltage(volts: VoltageUnit) = motorController.set(TalonSRXControlMode.PercentOutput, volts.asVolts/12)
-    override fun restoreFactoryDefaults() { motorController.configFactoryDefault() }
-    override fun setCurrentLimit(currentLimit: Int) { motorController.configContinuousCurrentLimit(currentLimit) }
-    override var idleMode: BeaverIdleMode = BeaverIdleMode.UNSET
-        set(value) {
-            motorController.setNeutralMode(value.SRXValue)
-            field = value
-        }
+    override fun configure(idleMode: BeaverIdleMode, currentLimit: Int) {
+        motorController.configFactoryDefault()
+        motorController.configContinuousCurrentLimit(currentLimit)
+        motorController.setNeutralMode(idleMode.SRXValue)
+    }
 }
