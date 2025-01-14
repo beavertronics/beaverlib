@@ -48,6 +48,7 @@ class Symbol(val description: String?) {
         }
         private val symbolRegistry: MutableMap<String, String?> = mutableMapOf()
         private val descriptionMap: MutableMap<String, MutableList<String>> = mutableMapOf()
+        @OptIn(ExperimentalStdlibApi::class)
         fun makeid(base: Int, len: Int): String {
             val abc = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/".slice(0..<base)
             var s = ""
