@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.event.BooleanEvent
 import edu.wpi.first.wpilibj.event.EventLoop
 
 @Deprecated("Promise is deprecated, if you need to use it, idk why you would need to")
+@Suppress("DEPRECATION")
 class Promise<T>(private val fn: (resolve: (value: T) -> Unit, reject: (error: Throwable) -> Unit) -> Unit) : Thenable<T> {
     private var resolvedWith: T? = null
     private var rejectedWith: Throwable? = null
