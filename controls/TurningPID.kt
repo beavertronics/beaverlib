@@ -12,6 +12,7 @@ import kotlin.math.sign
  * @author Anthony, Mike
  */
 @Suppress("MemberVisibilityCanBePrivate")
+@Deprecated("TurningPID is deprecated, use the default WPI PID instead")
 class TurningPID(var kP: Double, var kD: Double) {
     var setPoint = 0.0
     var timePrevious = Timer.getFPGATimestamp()

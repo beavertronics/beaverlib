@@ -3,6 +3,7 @@ package frc.beaverlib.async
 
 import frc.beaverlib.misc.Symbol
 
+@Deprecated("EventTarget is deprecated, if you need to use it, idk why you would need to")
 class EventTarget<DataType> {
     private val listeners: MutableMap<Symbol, (ev: DataType) -> Unit> = mutableMapOf()
     private val onceListeners: MutableMap<Symbol, (ev: DataType) -> Unit> = mutableMapOf()
