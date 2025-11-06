@@ -7,7 +7,9 @@ import beaverlib.utils.Units.Angular.AngleUnit
 import beaverlib.utils.Units.Linear.*
 import kotlin.math.absoluteValue
 import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.pow
+import kotlin.math.sin
 import kotlin.math.sqrt
 
 class Vector2(val x: Double, val y: Double) {
@@ -27,19 +29,30 @@ class Vector2(val x: Double, val y: Double) {
         fun zero() = Vector2(0.0, 0.0)
         fun crossProduct(vector1 : Vector2, vector2: Vector2 ) = (vector1.x * vector2.y) - (vector1.y * vector2.x)
         infix fun Vector2.dotProduct(other: Vector2) = (this.x * other.x) + (this.y * other.y)
-
+        fun lerp(v1: Vector2, v2 : Vector2, amount : Double) : Vector2{
+            return v1 + ((v2 - v1) * amount)
+        }
     }
     constructor(pose: Pose2d) : this(pose.x, pose.y)
     constructor(angle: AngleUnit) : this(angle.cos(), angle.sin())
 
 
+    /** @param angle Angle to rotate the vector by in radians*/
+    fun rotateBy(angle: Double) : Vector2{
+        return Vector2(cos(angle) *x - sin(angle) * y,
+            sin(angle)*x + cos(angle)*y)
+    }
 
-    /**
-     * Distance from 0, 0, calculated using pythagorean theorem
-     * */
+    /** @param angle Angle to rotate the vector by in radians*/
+    fun rotateBy(angle: AngleUnit) : Vector2{
+        return rotateBy(angle.asRadians)
+    }
+
+    /** Distance from 0, 0, calculated using pythagorean theorem */
     val magnitude get() = sqrt(x.pow(2) + y.pow(2))
-    fun angle()         = AngleUnit(atan2(y,x))
-    fun angleTo(other : Vector2)         = (this-other).angle()
+    /** Angle of the vector */
+    val angle get()     = AngleUnit(atan2(y,x))
+    fun angleTo(other : Vector2)         = (this-other).angle
     fun distance(other: Vector2): Double = (this-other).magnitude
     fun distance(pose: Pose2d): Double   = distance(Vector2(pose))
     fun xdistance(pos: Double): Double   = x - pos
