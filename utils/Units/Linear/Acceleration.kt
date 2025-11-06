@@ -12,7 +12,7 @@ value class Acceleration (val asMetersPerSecondSquared: Double) {
     operator fun unaryPlus() = this
     operator fun unaryMinus() = Acceleration(-asMetersPerSecondSquared)
     operator fun compareTo(other: Acceleration) = asMetersPerSecondSquared.compareTo(other.asMetersPerSecondSquared)
-    override fun toString() = "$asMetersPerSecondSquared m/s"
+    override fun toString() = "$asMetersPerSecondSquared m/s^2"
 }
 
 // Constructors

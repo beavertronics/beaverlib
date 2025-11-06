@@ -7,9 +7,13 @@ import beaverlib.utils.Sugar.radiansToDegrees
 import beaverlib.utils.Units.Linear.DistanceUnit
 import beaverlib.utils.Units.Time
 import kotlin.math.PI
+import kotlin.math.absoluteValue
+import kotlin.math.sign
 
 @JvmInline
 value class AngleUnit(val asRadians: Double) {
+    override fun toString(): String = "$asDegrees degrees"
+
     operator fun plus(other : AngleUnit) = AngleUnit(asRadians + other.asRadians)
     operator fun minus(other : AngleUnit) = AngleUnit(asRadians - other.asRadians)
     operator fun times(factor : Double) = AngleUnit(asRadians * factor)
@@ -35,7 +39,19 @@ value class AngleUnit(val asRadians: Double) {
 
     // Unit conversion math
     operator fun div(other : Time) = AngularVelocity(asRadians/other.asSeconds)
-    operator fun times(other : DistanceUnit) = DistanceUnit(asRadians/other.asMeters)
+    operator fun times(other : DistanceUnit) = DistanceUnit(asRadians * other.asMeters)
+
+    fun angleDistanceTo(other: AngleUnit): AngleUnit {
+        val normal = this - other
+        val wrap = -((2 * PI).radians * normal.asRadians.sign - normal)
+//            println("normal: ${normal} wrap: ${wrap} sign: ${normal.sign} angleA: $angleA angleB: $angleB")
+        return if (normal.asRadians.absoluteValue < wrap.asRadians.absoluteValue) { normal }
+        else { wrap }
+    }
+
+    fun angleDistanceWithin(maxError : AngleUnit, target : AngleUnit): Boolean {
+        return this.angleDistanceTo(target).asRadians.absoluteValue < maxError.asRadians
+    }
 
     /**
      * Taken from mean machines mean lib
@@ -101,3 +117,9 @@ inline val Number.degrees get() = AngleUnit(this.toDouble().degreesToRadians())
 // destructors
 inline val AngleUnit.asRotations get() = asRadians / TAU
 inline val AngleUnit.asDegrees get() = asRadians.radiansToDegrees()
+
+/** Wraps the angle such that it is between 0 and 360 degrees, 0 degrees is the left side of the circle, and angle increases counterclockwise*/
+inline val AngleUnit.standardPosition: AngleUnit
+    get() =
+        if (this.asRadians >= 0.0) { AngleUnit(this.asRadians % (2 * PI)) }
+        else { AngleUnit((2 * PI) + (this.asRadians % (2 * PI))) }

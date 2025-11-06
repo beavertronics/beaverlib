@@ -6,6 +6,8 @@ import beaverlib.utils.Units.Linear.VelocityUnit
 import beaverlib.utils.Units.Time
 
 class AngularVelocity (val asRadiansPerSecond: Double) {
+    override fun toString(): String = "$asRPM RPM"
+
     //Basic Math
     operator fun plus(other : AngularVelocity) = AngularAcceleration(asRadiansPerSecond + other.asRadiansPerSecond)
     operator fun minus(other : AngularVelocity) = AngularAcceleration(asRadiansPerSecond - other.asRadiansPerSecond)
