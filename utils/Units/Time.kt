@@ -14,7 +14,6 @@ value class Time (val asSeconds: Double){
 
     operator fun unaryMinus() = Time(-asSeconds)
     operator fun compareTo(other: Time) = asSeconds.compareTo(other.asSeconds)
-
     override fun toString(): String = "$asSeconds seconds"
 }
 operator fun Number.div(other: Time) = Frequency(this.toDouble()/other.asSeconds)

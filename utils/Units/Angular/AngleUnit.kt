@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d
 import beaverlib.utils.Sugar.TAU
 import beaverlib.utils.Sugar.degreesToRadians
 import beaverlib.utils.Sugar.radiansToDegrees
+import beaverlib.utils.Units.Frequency
 import beaverlib.utils.Units.Linear.DistanceUnit
 import beaverlib.utils.Units.Time
 import kotlin.math.PI
@@ -23,6 +24,7 @@ value class AngleUnit(val asRadians: Double) {
     operator fun rem(other: Number) = AngleUnit(asRadians % other.toDouble())
     operator fun unaryPlus() = this
     operator fun unaryMinus() = AngleUnit(-asRadians)
+
     fun getCoterminal() : AngleUnit {
         var coterminalAngle = this % TAU
         if(coterminalAngle.asRadians < 0) return TAU.radians - coterminalAngle
@@ -34,12 +36,6 @@ value class AngleUnit(val asRadians: Double) {
     fun csc() = AngleUnit.csc(this)
     fun sec() = AngleUnit.sec(this)
     fun cot() = AngleUnit.tan(this)
-
-
-
-    // Unit conversion math
-    operator fun div(other : Time) = AngularVelocity(asRadians/other.asSeconds)
-    operator fun times(other : DistanceUnit) = DistanceUnit(asRadians * other.asMeters)
 
     fun angleDistanceTo(other: AngleUnit): AngleUnit {
         val normal = this - other

@@ -1,13 +1,14 @@
 package beaverlib.utils.Units.Linear
 
 import beaverlib.utils.Units.Time
+import edu.wpi.first.units.AccelerationUnit
+import edu.wpi.first.units.Unit
 
 @JvmInline
 value class Acceleration (val asMetersPerSecondSquared: Double) {
     operator fun plus(other: Acceleration) = Acceleration(asMetersPerSecondSquared + other.asMetersPerSecondSquared)
     operator fun minus(other: Acceleration) = Acceleration(asMetersPerSecondSquared - other.asMetersPerSecondSquared)
     operator fun times(factor: Double) = Acceleration(asMetersPerSecondSquared * factor)
-    operator fun times(factor: Time) = VelocityUnit(asMetersPerSecondSquared * factor.asSeconds)
     operator fun div(factor: Double) = Acceleration(asMetersPerSecondSquared / factor)
     operator fun unaryPlus() = this
     operator fun unaryMinus() = Acceleration(-asMetersPerSecondSquared)

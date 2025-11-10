@@ -11,11 +11,6 @@ value class VoltageUnit(val asVolts: Double) {
     operator fun unaryMinus() = VoltageUnit(-asVolts)
     operator fun compareTo(other: VoltageUnit) = asVolts.compareTo(other.asVolts)
     override fun toString() = "$asVolts v"
-
-    //Unit conversion math
-    operator fun div(other: Current) = Resistance(asVolts / other.asAmps)
-    operator fun div(other: Resistance) = Current(asVolts / other.asOhms)
-
 }
 
 //Constructors

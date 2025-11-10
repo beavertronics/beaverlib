@@ -15,7 +15,6 @@ value class Weight(val asKilograms: Double) {
     operator fun unaryPlus() = this
     operator fun unaryMinus() = Weight(-asKilograms)
 }
-operator fun Acceleration.times(other: Weight) = Force(this.asMetersPerSecondSquared * other.asKilograms)
 
 //Constructors
 inline val Number.kg get() = Weight(toDouble())

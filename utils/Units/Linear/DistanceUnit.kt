@@ -1,5 +1,6 @@
 package beaverlib.utils.Units.Linear
 
+import beaverlib.utils.Units.Frequency
 import beaverlib.utils.Units.Time
 import kotlin.math.pow
 
@@ -10,7 +11,6 @@ value class DistanceUnit(val asMeters: Double) {
     operator fun minus(other: DistanceUnit) = DistanceUnit(asMeters-other.asMeters)
     operator fun times(factor: Number) = DistanceUnit(asMeters*factor.toDouble())
     operator fun div(factor: Number) = DistanceUnit(asMeters/factor.toDouble())
-    operator fun div(factor: Time) = VelocityUnit(asMeters/factor.asSeconds)
     operator fun rem(other: DistanceUnit) = DistanceUnit(asMeters % other.asMeters)
 
     operator fun unaryMinus() = DistanceUnit(-asMeters)

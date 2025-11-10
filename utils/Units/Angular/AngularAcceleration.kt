@@ -17,10 +17,6 @@ class AngularAcceleration (val asRadiansPerSecondSquared: Double) {
     operator fun rem(other: AngularAcceleration) = AngularAcceleration(asRadiansPerSecondSquared % other.asRadiansPerSecondSquared)
     operator fun unaryPlus() = this
     operator fun unaryMinus() = AngularAcceleration(-asRadiansPerSecondSquared)
-    // Unit conversion math
-    operator fun times(other: Time) = AngularVelocity(asRadiansPerSecondSquared * other.asSeconds)
-    operator fun times(other: DistanceUnit) = Acceleration(asRadiansPerSecondSquared * other.asMeters)
-
 }
 // Constructors
 inline val Number.radiansPerSecondSquared get() = AngularAcceleration(this.toDouble())

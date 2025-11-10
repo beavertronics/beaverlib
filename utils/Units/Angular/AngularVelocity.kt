@@ -1,6 +1,7 @@
 package beaverlib.utils.Units.Angular
 
 import beaverlib.utils.Sugar.TAU
+import beaverlib.utils.Units.Frequency
 import beaverlib.utils.Units.Linear.DistanceUnit
 import beaverlib.utils.Units.Linear.VelocityUnit
 import beaverlib.utils.Units.Time
@@ -17,11 +18,6 @@ class AngularVelocity (val asRadiansPerSecond: Double) {
     operator fun rem(other: AngularVelocity) = AngularVelocity(asRadiansPerSecond % other.asRadiansPerSecond)
     operator fun unaryPlus() = this
     operator fun unaryMinus() = AngularVelocity(-asRadiansPerSecond)
-    // Unit conversion math
-    operator fun times(other: Time) = AngleUnit(asRadiansPerSecond * other.asSeconds)
-    operator fun div(other: Time) = AngularAcceleration(asRadiansPerSecond / other.asSeconds)
-
-    operator fun times(other: DistanceUnit) = VelocityUnit(asRadiansPerSecond * other.asMeters)
 }
 // Constructors
 inline val Number.radiansPerSecond get() = AngularVelocity(this.toDouble())

@@ -11,9 +11,6 @@ value class Current (val asAmps: Double) {
     operator fun unaryMinus() = Current(-asAmps)
     operator fun compareTo(other: Current) = asAmps.compareTo(other.asAmps)
     override fun toString() = "$asAmps amps"
-
-    //Unit converting math
-    operator fun times(other: Resistance) = VoltageUnit(asAmps * other.asOhms)
 }
 
 //Constructors
