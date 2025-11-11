@@ -14,11 +14,15 @@ value class VelocityUnit(val asMetersPerSecond: Double) {
     operator fun compareTo(other: VelocityUnit) = asMetersPerSecond.compareTo(other.asMetersPerSecond)
     override fun toString() = "$asMetersPerSecond m/s"
 
+    operator fun times(factor: Frequency) = Acceleration(asMetersPerSecond * factor.asHertz)
+    operator fun times(factor: Time) = DistanceUnit(asMetersPerSecond * factor.asSeconds)
+    operator fun Frequency.times(factor: VelocityUnit) = Acceleration(asHertz * factor.asMetersPerSecond)
+    operator fun Time.times(factor: VelocityUnit) = DistanceUnit(asSeconds * factor.asMetersPerSecond)
 
-
-
-
-
+    operator fun div(factor: DistanceUnit) = Frequency(asMetersPerSecond / factor.asMeters)
+    operator fun div(factor: Time) = Acceleration(asMetersPerSecond / factor.asSeconds)
+    operator fun div(factor: Frequency) = Acceleration(asMetersPerSecond / factor.asHertz)
+    operator fun div(factor: VelocityUnit) = asMetersPerSecond / factor.asMetersPerSecond
 }
 // constructos
 inline val Number.metersPerSecond get() = VelocityUnit(this.toDouble())

@@ -1,5 +1,8 @@
 package beaverlib.utils.Units.Linear
 
+import beaverlib.utils.Units.Angular.AngleUnit
+import beaverlib.utils.Units.Angular.AngularAcceleration
+import beaverlib.utils.Units.Angular.AngularVelocity
 import beaverlib.utils.Units.Frequency
 import beaverlib.utils.Units.Time
 import kotlin.math.pow
@@ -21,6 +24,13 @@ value class DistanceUnit(val asMeters: Double) {
 
     override fun toString() = "$asInches inches"
 
+    operator fun times(factor: Frequency) = VelocityUnit(asMeters*factor.asHertz)
+    operator fun div(factor: Time) = VelocityUnit(asMeters/factor.asSeconds)
+    operator fun div(factor: VelocityUnit) = Time(asMeters/factor.asMetersPerSecond)
+    operator fun div(factor: DistanceUnit) = asMeters/factor.asMeters
+    operator fun times(other : AngleUnit) = DistanceUnit(asMeters * other.asRadians)
+    operator fun times(other: AngularAcceleration) = Acceleration(asMeters * other.asRadiansPerSecondSquared)
+    operator fun times(other: AngularVelocity) = VelocityUnit(asMeters * other.asRadiansPerSecond)
 }
 // Constructor
 inline val Number.meters get() = DistanceUnit(this.toDouble())

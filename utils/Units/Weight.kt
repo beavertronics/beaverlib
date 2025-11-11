@@ -7,13 +7,14 @@ value class Weight(val asKilograms: Double) {
     operator fun plus(other : Weight) = Weight(asKilograms + other.asKilograms)
     operator fun minus(other : Weight) = Weight(asKilograms - other.asKilograms)
     operator fun times(factor : Number) = Weight(asKilograms * factor.toDouble())
-    operator fun times(factor : Acceleration) = Weight(asKilograms * factor.asMetersPerSecondSquared)
-
     operator fun div(factor: Double) = Weight(asKilograms / factor.toDouble())
 
     operator fun rem(other: Weight) = Weight(asKilograms % other.asKilograms)
     operator fun unaryPlus() = this
     operator fun unaryMinus() = Weight(-asKilograms)
+
+    operator fun times(factor: Acceleration) = Force(asKilograms * factor.asMetersPerSecondSquared)
+
 }
 
 //Constructors

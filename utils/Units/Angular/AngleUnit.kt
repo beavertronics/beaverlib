@@ -98,9 +98,14 @@ value class AngleUnit(val asRadians: Double) {
         val left = AngleUnit(PI)
         /** An angle pointing down in standard position (3PI/2 radians) */
         val down = AngleUnit(PI*3/2)
-
-
     }
+
+    operator fun times(other : DistanceUnit) = DistanceUnit(asRadians * other.asMeters)
+    operator fun times(other : Frequency) = AngularVelocity(asRadians * other.asHertz)
+
+    operator fun div(other : Time) = AngularVelocity(asRadians/other.asSeconds)
+    operator fun div(other: AngleUnit) = asRadians / other.asRadians
+    operator fun div(other: AngularVelocity) = Time(asRadians / other.asRadiansPerSecond)
 }
 
 inline val Rotation2d.beaverRadians get() = AngleUnit(this.radians)

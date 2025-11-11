@@ -1,5 +1,8 @@
 package frc.robot.beaverlib.utils.Units.Electrical
 
+import beaverlib.utils.Units.Frequency
+import beaverlib.utils.Units.Time
+
 
 @JvmInline
 value class Power (val asWatts: Double) {
@@ -10,8 +13,15 @@ value class Power (val asWatts: Double) {
     operator fun div(factor: Double) = Energy(asWatts / factor)
     operator fun unaryPlus() = this
     operator fun unaryMinus() = Energy(-asWatts)
-    operator fun compareTo(other: Energy) = asWatts.compareTo(other.asWatts)
+    operator fun compareTo(other: Power) = asWatts.compareTo(other.asWatts)
     override fun toString() = "$asWatts joules"
+
+    // Unit Math
+    operator fun times(other : Time) = Energy(asWatts * other.asSeconds)
+
+    operator fun div(other : Frequency) = Energy(asWatts / other.asHertz)
+    operator fun div(other : Power) = asWatts / other.asWatts
+
 }
 
 //Constructors
@@ -26,5 +36,6 @@ val Number.kilowatts get() = Energy(toDouble()*1000)
 
 
 //Destructors
-val Energy.asMilliwatts get() = asWatts*1000
-val Energy.asKilowatts get() = asWatts/1000
+val Power.asMilliwatts get() = asWatts*1000
+val Power.asKilowatts get() = asWatts/1000
+
