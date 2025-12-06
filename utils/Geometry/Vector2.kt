@@ -89,6 +89,10 @@ class Vector2(val x: Double, val y: Double) {
 
     operator fun minus(other: Vector2) = Vector2(x - other.x, y - other.y)
 
+    operator fun plus(other: Pose2d) = this + other.vector2
+
+    operator fun minus(other: Pose2d) = this - other.vector2
+
     operator fun times(other: Double) = Vector2(x * other, y * other)
 
     operator fun div(other: Double) = Vector2(x / other, y / other)
@@ -116,3 +120,6 @@ class Vector2(val x: Double, val y: Double) {
      */
     fun toPose2d(rotation: Double) = Pose2d(x, y, Rotation2d.fromDegrees(rotation))
 }
+
+val Pose2d.vector2
+    get() = Vector2(this)
