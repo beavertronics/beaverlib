@@ -1,5 +1,6 @@
 package beaverlib.controls
 
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 
 /** @property kS (roughly) how much voltage to overcome static friction
@@ -31,7 +32,7 @@ fun SimpleMotorFeedForwardConstants.toFeedForward() : SimpleMotorFeedforward {
 /**
  * @return A 5970 Engine Controller.PID controller using the pid constants in the class
  */
-fun PIDConstants.toPID() : Controller.PID {
-    return Controller.PID(this.P, this.I, this.D)
+fun PIDConstants.toPID() : PIDController {
+    return PIDController(this.P, this.I, this.D)
 }
 val PIDConstants.PathPlannerPID : com.pathplanner.lib.config.PIDConstants get() = com.pathplanner.lib.config.PIDConstants(this.P, this.I, this.D)
