@@ -34,3 +34,4 @@ fun SimpleMotorFeedForwardConstants.toFeedForward() : SimpleMotorFeedforward {
 fun PIDConstants.toPID() : Controller.PID {
     return Controller.PID(this.P, this.I, this.D)
 }
+val PIDConstants.PathPlannerPID : com.pathplanner.lib.config.PIDConstants get() = com.pathplanner.lib.config.PIDConstants(this.P, this.I, this.D)

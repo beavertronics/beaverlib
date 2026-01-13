@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward
  * A closed-loop controller controlling a one-dimensional output,
  * usually a motor.
  */
+@Deprecated("Controller is deprecated, as it is it is just a wrapper for PID controller that provides no functionality")
 interface Controller {
     var setpoint: Double
 
