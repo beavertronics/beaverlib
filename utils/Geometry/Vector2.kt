@@ -118,7 +118,7 @@ class Vector2(val x: Double, val y: Double) {
      * @param rotation The rotation of the pose, in degrees
      * @return A new Pose2d contructed from the coordinate and the rotation
      */
-    fun toPose2d(rotation: Double) = Pose2d(x, y, Rotation2d.fromDegrees(rotation))
+    fun toPose2d(rotation: AngleUnit) = Pose2d(x, y, Rotation2d.fromRadians(rotation.asRadians))
 }
 
 val Pose2d.vector2
