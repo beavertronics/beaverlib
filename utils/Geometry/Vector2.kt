@@ -8,6 +8,7 @@ import beaverlib.utils.Units.Linear.VelocityUnit
 import beaverlib.utils.Units.Linear.asFeetPerSecondSquared
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.math.kinematics.ChassisSpeeds
 import kotlin.math.*
 
 class Vector2(val x: Double, val y: Double) {
@@ -123,3 +124,5 @@ class Vector2(val x: Double, val y: Double) {
 
 val Pose2d.vector2
     get() = Vector2(this)
+val ChassisSpeeds.vector2
+    get() = Vector2(this.vxMetersPerSecond, this.vyMetersPerSecond)
