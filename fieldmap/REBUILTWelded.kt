@@ -49,6 +49,8 @@ object FieldMapREBUILTWelded {
             )
     }
 
+    val trenches = arrayOf(TopRedTrench, BottomRedTrench, TopBlueTrench, BottomBlueTrench)
+
     object TopRedTrench : Trench {
         override val centerX: Double = 182.11.inches.asMeters
         override val line: Line =
