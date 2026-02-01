@@ -42,9 +42,8 @@ class BeaverVisionCamera(
     fun getMultiTagPoseWithFallback(result: PhotonPipelineResult): Pose3d? {
         if (result.targets.isEmpty()) return null
         val poseEstimation =
-            if (result.targets.size <= 1)
-                poseEstimator.estimateClosestToReferencePose(result, referencePose)
-            else poseEstimator.estimateCoprocMultiTagPose(result)
+            if (result.multiTagResult.isPresent) poseEstimator.estimateCoprocMultiTagPose(result)
+            else poseEstimator.estimateClosestToReferencePose(result, referencePose)
 
         if (poseEstimation.isEmpty) return null
         return poseEstimation.get().estimatedPose
