@@ -5,6 +5,7 @@ import beaverlib.utils.Units.Linear.inches
 import beaverlib.utils.geometry.Line
 import beaverlib.utils.geometry.Rectangle
 import beaverlib.utils.geometry.Vector2
+import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.wpilibj.DriverStation
 
 interface Hub {
@@ -31,14 +32,6 @@ object FieldMapREBUILTWelded {
             )
     }
 
-    val teamHub
-        get() =
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                RedHub
-            } else {
-                BlueHub
-            }
-
     object BlueHub : Hub {
         override val center =
             Vector2(651.22.inches.asMeters - 182.11.inches.asMeters, 158.84.inches.asMeters)
@@ -49,7 +42,32 @@ object FieldMapREBUILTWelded {
             )
     }
 
+    val teamHub
+        get() =
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                RedHub
+            } else {
+                BlueHub
+            }
+
     val trenches = arrayOf(TopRedTrench, BottomRedTrench, TopBlueTrench, BottomBlueTrench)
+
+    enum class TrenchPos {
+        Bottom,
+        Top,
+    }
+
+    fun teamTrenches(
+        team: DriverStation.Alliance = DriverStation.getAlliance().get()
+    ): Map<TrenchPos, Trench> =
+        if (team == DriverStation.Alliance.Red) {
+            mapOf(Pair(TrenchPos.Bottom, BottomRedTrench), Pair(TrenchPos.Top, TopRedTrench))
+        } else {
+            mapOf(Pair(TrenchPos.Bottom, BottomBlueTrench), Pair(TrenchPos.Top, BottomBlueTrench))
+        }
+
+    val RedAllianceAreaLineX = 182.11.inches
+    val BlueAllianceAreaLineX = FieldLength - 182.11.inches
 
     object TopRedTrench : Trench {
         override val centerX: Double = 182.11.inches.asMeters
@@ -87,5 +105,31 @@ object FieldMapREBUILTWelded {
             Line(Vector2(centerX, 0.0.inches.asMeters), Vector2(centerX, 50.59.inches.asMeters))
         val shape: Rectangle
             get() = TODO("Not yet implemented")
+    }
+
+    enum class AllianceArea {
+        Red,
+        RedTrench,
+        Center,
+        BlueTrench,
+        Blue,
+    }
+
+    fun getPoseAllianceArea(pose: Pose2d): AllianceArea {
+        if (pose.x < RedHub.shape.bottomLeft.x) return AllianceArea.Red
+        if (pose.x < RedHub.shape.bottomRight.x) return AllianceArea.RedTrench
+        if (pose.x < BlueHub.shape.bottomLeft.x) return AllianceArea.Center
+        if (pose.x < BlueHub.shape.bottomRight.x) return AllianceArea.BlueTrench
+        return AllianceArea.Blue
+    }
+
+    fun getTeamAllianceArea(
+        alliance: DriverStation.Alliance = DriverStation.getAlliance().get()
+    ): AllianceArea {
+        if (alliance == DriverStation.Alliance.Red) {
+            return AllianceArea.Red
+        } else {
+            return AllianceArea.Blue
+        }
     }
 }
