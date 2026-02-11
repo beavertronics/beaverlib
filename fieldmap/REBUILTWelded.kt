@@ -107,29 +107,30 @@ object FieldMapREBUILTWelded {
             get() = TODO("Not yet implemented")
     }
 
-    enum class AllianceArea {
+    enum class AllianceArea() {
         Red,
         RedTrench,
-        Center,
+        Neutral,
         BlueTrench,
         Blue,
     }
 
     fun getPoseAllianceArea(pose: Pose2d): AllianceArea {
-        if (pose.x < RedHub.shape.bottomLeft.x) return AllianceArea.Red
-        if (pose.x < RedHub.shape.bottomRight.x) return AllianceArea.RedTrench
-        if (pose.x < BlueHub.shape.bottomLeft.x) return AllianceArea.Center
-        if (pose.x < BlueHub.shape.bottomRight.x) return AllianceArea.BlueTrench
-        return AllianceArea.Blue
+        return when {
+            (pose.x < RedHub.shape.bottomLeft.x) -> AllianceArea.Red
+            (pose.x < RedHub.shape.bottomRight.x) -> AllianceArea.RedTrench
+            (pose.x < BlueHub.shape.bottomLeft.x) -> AllianceArea.Neutral
+            (pose.x < BlueHub.shape.bottomRight.x) -> AllianceArea.BlueTrench
+            else -> AllianceArea.Blue
+        }
     }
 
     fun getTeamAllianceArea(
         alliance: DriverStation.Alliance = DriverStation.getAlliance().get()
-    ): AllianceArea {
+    ): AllianceArea =
         if (alliance == DriverStation.Alliance.Red) {
-            return AllianceArea.Red
+            AllianceArea.Red
         } else {
-            return AllianceArea.Blue
+            AllianceArea.Blue
         }
-    }
 }

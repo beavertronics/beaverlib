@@ -33,7 +33,7 @@ data class Rectangle(val coordinate1: Vector2, val coordinate2: Vector2) {
         get() = coordinate2.y
 
     val center
-        get() = coordinate1 + ((coordinate1 - coordinate2) / 2.0)
+        get() = (coordinate1 + coordinate2) / 2.0
 
     val width
         get() = (x1 - x2).absoluteValue
