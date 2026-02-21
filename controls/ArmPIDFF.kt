@@ -28,7 +28,8 @@ class ArmPIDFF(PIDConstants: PIDConstants, FFConstants: ArmFeedForwardConstants)
      * @param measurement The measured value of what the PIDFF controls
      */
     fun calculate(measurement: AngleUnit, velocity: AngularVelocity = 0.radiansPerSecond): Double {
-        return PID.calculate(measurement.asRadians) + FeedForward.calculate(measurement.asRadians, velocity.asRadiansPerSecond)
+        return PID.calculate(measurement.asRadians) +
+            FeedForward.calculate(measurement.asRadians, velocity.asRadiansPerSecond)
     }
 
     /** Returns this PID [PIDController.atSetpoint] */
@@ -36,6 +37,7 @@ class ArmPIDFF(PIDConstants: PIDConstants, FFConstants: ArmFeedForwardConstants)
         return PID.atSetpoint()
     }
 }
+
 /** @return A WPILib PIDController using the pid constants in the class */
 fun PIDConstants.toArmPidFF(FFConstants: ArmFeedForwardConstants): ArmPIDFF {
     return ArmPIDFF(this, FFConstants)

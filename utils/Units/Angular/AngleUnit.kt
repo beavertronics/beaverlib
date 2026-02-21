@@ -114,6 +114,8 @@ inline val Rotation2d.beaverRadians get() = AngleUnit(this.radians)
 inline val Number.rotations get() = AngleUnit(this.toDouble() * TAU)
 inline val Number.radians get() = AngleUnit(this.toDouble())
 inline val Number.degrees get() = AngleUnit(this.toDouble().degreesToRadians())
+inline val Rotation2d.asAngleUnit get() = AngleUnit(this.radians)
+
 
 // destructors
 inline val AngleUnit.asRotations get() = asRadians / TAU
