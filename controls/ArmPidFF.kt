@@ -12,10 +12,9 @@ import edu.wpi.first.util.sendable.SendableBuilder
 /** A combined Proportional Integral Derivative and an Arm Feed Forward controller. */
 class ArmPidFF(pidConstants: PIDConstants, ffConstants: ArmFeedForwardConstants) : Sendable {
     /** The Proportional Integral Derivative controller part of the PidFF */
-    private val pid = PIDController(pidConstants.p, pidConstants.i, pidConstants.d)
+    val pid = PIDController(pidConstants.p, pidConstants.i, pidConstants.d)
     /** The FeedForward part of the PidFF */
-    private val feedforward =
-        ArmFeedforward(ffConstants.kS, ffConstants.kG, ffConstants.kV, ffConstants.kA)
+    val feedforward = ArmFeedforward(ffConstants.kS, ffConstants.kG, ffConstants.kV, ffConstants.kA)
 
     /** The goal state for the PidFF */
     var setpoint: AngleUnit
