@@ -5,28 +5,34 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward
 
 /**
  * @property kS (roughly) how much voltage to overcome static friction
- *     @property kV How much voltage to maintain a velocity
- *     @property kA How much voltage to accelerate- Can go unused (0)
+ * @property kV How much voltage to maintain a velocity
+ * @property kA How much voltage to accelerate (Can go unused)
  */
 data class SimpleMotorFeedForwardConstants(val kS: Double, val kV: Double, val kA: Double)
 
 /**
  * @property kS (roughly) how much voltage to overcome static friction
- *     @property kV How much voltage to maintain a velocity
- *     @property kA How much voltage to accelerate- Can go unused (0)
+ * @property kG How much voltage to overcome gravity (can be referred to as kCos)
+ * @property kV How much voltage to maintain a velocity
+ * @property kA How much voltage to accelerate (Can go unused)
  */
-data class ArmFeedForwardConstants(val kS: Double, val kG: Double, val kV: Double)
+data class ArmFeedForwardConstants(
+    val kS: Double,
+    val kG: Double,
+    val kV: Double,
+    val kA: Double = 0.0,
+)
 
 /**
- * @property P Proportional to the error (if it's bad, fix it. If it's really bad, fix it harder
- *   based on how bad it is)
- * @property I Proportional to the slope (derivative) of the error (If it's OK but it's starting to
- *   go bad, fix it ahead of time, and if it's bad but it's getting close to being good, fix it less
- *   hard so it doesn't overshoot)
- * @property D Propotional to the integral of the error (If it's been bad for a long time, fix it
- *   harder.) Usually very unstable; much safer to leave at 0.0 if possible
+ * @property p Proportional to the error. If the error is large, apply a large correction; if it's
+ *   small, apply a small correction.
+ * @property i Proportional to the integral (accumulated sum) of the error. If the error has been
+ *   bad for a long time, increase correction. Often unstable; commonly kept low or at 0.
+ * @property d Proportional to the derivative (rate of change) of the error. If the error is
+ *   starting to get worse, correct preemptively; if it's improving quickly, reduce correction to
+ *   avoid overshoot.
  */
-data class PIDConstants(val P: Double, val I: Double, val D: Double)
+data class PIDConstants(val p: Double, val i: Double, val d: Double)
 
 /** @return A WPILib SimpleMotorFeedForward using the feedforward constants in the class */
 fun SimpleMotorFeedForwardConstants.toFeedForward(): SimpleMotorFeedforward {
@@ -35,8 +41,8 @@ fun SimpleMotorFeedForwardConstants.toFeedForward(): SimpleMotorFeedforward {
 
 /** @return A WPILib PIDController using the pid constants in the class */
 fun PIDConstants.toPID(): PIDController {
-    return PIDController(this.P, this.I, this.D)
+    return PIDController(this.p, this.i, this.d)
 }
 
 val PIDConstants.PathPlannerPID: com.pathplanner.lib.config.PIDConstants
-    get() = com.pathplanner.lib.config.PIDConstants(this.P, this.I, this.D)
+    get() = com.pathplanner.lib.config.PIDConstants(this.p, this.i, this.d)
