@@ -51,8 +51,3 @@ class ArmPidFF(pidConstants: PIDConstants, ffConstants: ArmFeedForwardConstants)
         builder.addDoubleProperty("setpoint", { setpoint.asRadians }, { setpoint = it.radians })
     }
 }
-
-/** @return A WPILib PIDController using the pid constants in the class */
-fun PIDConstants.toArmPidFF(ffConstants: ArmFeedForwardConstants): ArmPidFF {
-    return ArmPidFF(this, ffConstants)
-}
