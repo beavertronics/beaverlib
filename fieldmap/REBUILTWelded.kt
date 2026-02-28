@@ -23,7 +23,7 @@ object FieldMapREBUILTWelded {
     val FieldHeight = 26.feet + 4.inches
     val HubWidth = 46.508.inches.asMeters
 
-    object RedHub : Hub {
+    object BlueHub : Hub {
         override val center = Vector2(182.11.inches.asMeters, 158.84.inches.asMeters)
         override val shape =
             Rectangle(
@@ -32,7 +32,7 @@ object FieldMapREBUILTWelded {
             )
     }
 
-    object BlueHub : Hub {
+    object RedHub : Hub {
         override val center =
             Vector2(651.22.inches.asMeters - 182.11.inches.asMeters, 158.84.inches.asMeters)
         override val shape =
@@ -66,30 +66,11 @@ object FieldMapREBUILTWelded {
             mapOf(Pair(TrenchPos.Bottom, BottomBlueTrench), Pair(TrenchPos.Top, BottomBlueTrench))
         }
 
-    val RedAllianceAreaLineX = 182.11.inches
-    val BlueAllianceAreaLineX = FieldLength - 182.11.inches
-
-    object TopRedTrench : Trench {
-        override val centerX: Double = 182.11.inches.asMeters
-        override val line: Line =
-            Line(
-                Vector2(centerX, 317.69.inches.asMeters),
-                Vector2(centerX, (317.69 - 50.59).inches.asMeters),
-            )
-        val shape: Rectangle
-            get() = TODO("Not yet implemented")
-    }
-
-    object BottomRedTrench : Trench {
-        override val centerX: Double = 182.11.inches.asMeters
-        override val line: Line =
-            Line(Vector2(centerX, 0.0.inches.asMeters), Vector2(centerX, 50.59.inches.asMeters))
-        val shape: Rectangle
-            get() = TODO("Not yet implemented")
-    }
+    val BlueAllianceAreaLineX = 182.11.inches
+    val RedAllianceAreaLineX = FieldLength - 182.11.inches
 
     object TopBlueTrench : Trench {
-        override val centerX: Double = 469.11.inches.asMeters
+        override val centerX: Double = 182.11.inches.asMeters
         override val line: Line =
             Line(
                 Vector2(centerX, 317.69.inches.asMeters),
@@ -100,6 +81,25 @@ object FieldMapREBUILTWelded {
     }
 
     object BottomBlueTrench : Trench {
+        override val centerX: Double = 182.11.inches.asMeters
+        override val line: Line =
+            Line(Vector2(centerX, 0.0.inches.asMeters), Vector2(centerX, 50.59.inches.asMeters))
+        val shape: Rectangle
+            get() = TODO("Not yet implemented")
+    }
+
+    object TopRedTrench : Trench {
+        override val centerX: Double = 469.11.inches.asMeters
+        override val line: Line =
+            Line(
+                Vector2(centerX, 317.69.inches.asMeters),
+                Vector2(centerX, (317.69 - 50.59).inches.asMeters),
+            )
+        val shape: Rectangle
+            get() = TODO("Not yet implemented")
+    }
+
+    object BottomRedTrench : Trench {
         override val centerX: Double = 469.11.inches.asMeters
         override val line: Line =
             Line(Vector2(centerX, 0.0.inches.asMeters), Vector2(centerX, 50.59.inches.asMeters))
@@ -117,11 +117,11 @@ object FieldMapREBUILTWelded {
 
     fun getPoseAllianceArea(pose: Pose2d): AllianceArea {
         return when {
-            (pose.x < RedHub.shape.bottomLeft.x) -> AllianceArea.Red
-            (pose.x < RedHub.shape.bottomRight.x) -> AllianceArea.RedTrench
-            (pose.x < BlueHub.shape.bottomLeft.x) -> AllianceArea.Neutral
+            (pose.x < BlueHub.shape.bottomLeft.x) -> AllianceArea.Blue
             (pose.x < BlueHub.shape.bottomRight.x) -> AllianceArea.BlueTrench
-            else -> AllianceArea.Blue
+            (pose.x < RedHub.shape.bottomLeft.x) -> AllianceArea.Neutral
+            (pose.x < RedHub.shape.bottomRight.x) -> AllianceArea.RedTrench
+            else -> AllianceArea.Red
         }
     }
 
