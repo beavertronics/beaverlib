@@ -5,6 +5,7 @@ import kotlin.math.pow
 class Polynomial(vararg coefficients: Double) {
     val coef = coefficients
 
+    @kotlin.ExperimentalStdlibApi
     fun calculate(value: Double) : Double {
         var returnValue = 0.0
         for (i: Int in 0..coef.size-1){
