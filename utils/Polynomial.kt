@@ -9,7 +9,6 @@ import kotlin.math.pow
  * @param coefficients the coefficients of the terms of the polynomial, in order of greatest power
  *   of x to least
  */
-@kotlin.ExperimentalStdlibApi
 class Polynomial(vararg val coefficients: Double) {
     fun calculate(value: Double): Double {
         var returnValue = 0.0
