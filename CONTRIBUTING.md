@@ -2,7 +2,7 @@
 Contributions to Beaverlib are greatly appreciated! Contributions to Beaverlib can include:
 - Year-agnostic contributions
 - Main season contributions
-- Offseason events contributions
+- Offseason event contributions
 
 Contributions do not have to be from teams specifically within the Pacific Northwest District; anyone can contribute to this project.
 
