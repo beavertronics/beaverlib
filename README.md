@@ -27,4 +27,5 @@ If using IntelliJ IDEA, you can update Beaverlib by:
 - To fix this, you can delete the Beaverlib directory and then reinstall. Refer to the guide above, "Installing Beaverlib".
 
 **Additional information** <br>
+For documentation, go to [our wiki](https://github.com/beavertronics/beaverlib/wiki). <br>
 For information for 5970 regarding Beaverlib, go to [this page](https://github.com/beavertronics/beaverlib/blob/main/team5970.md).
