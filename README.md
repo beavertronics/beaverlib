@@ -9,4 +9,4 @@ For information for 5970 regarding Beaverlib, go to this [page](https://github.c
 
 ***
 
-# Thank you to all of our contributors!
+# Thank you to all of our contributors! We appreciate you!
