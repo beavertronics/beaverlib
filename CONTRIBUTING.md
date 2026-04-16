@@ -4,6 +4,8 @@ Contributions to Beaverlib are greatly appreciated! Contributions to Beaverlib c
 - Main season contributions
 - Offseason events contributions
 
+Contributions do not have to be from teams specifically within the Pacific Northwest District; anyone can contribute to this project.
+
 # Rules
 The only thing that should ever be contributed to the main branch is year-agnostic changes. These are changes that can be used from year-to-year, not anything season-specific. These changes still must be done through making a branch and then making a Pull Request; no commits can be made directly to main.
 
