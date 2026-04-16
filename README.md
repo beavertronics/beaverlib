@@ -26,5 +26,5 @@ If using IntelliJ IDEA, you can update Beaverlib by:
 "Why isn't Beaverlib updating / showing up?"
 - To fix this, you can delete the Beaverlib directory and then reinstall. Refer to the guide above, "Installing Beaverlib".
 
-For us specifically, the full command is:
-- `git submodule add https://github.com/beavertronics/beaverlib.git ./src/main/kotlin/beaverlib`
+**Additional information**
+For information for 5970 regarding Beaverlib, go to [this page](https://github.com/beavertronics/beaverlib/blob/main/team5970.md).
