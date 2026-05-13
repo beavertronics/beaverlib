@@ -7,6 +7,7 @@ import beaverlib.utils.geometry.Rectangle
 import beaverlib.utils.geometry.Vector2
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.wpilibj.DriverStation
+import java.sql.Driver
 
 interface Hub {
     val center: Vector2
@@ -22,6 +23,18 @@ object FieldMapREBUILTWelded {
     val FieldLength = 54.feet + 8.75.inches
     val FieldHeight = 26.feet + 4.inches
     val HubWidth = 46.508.inches.asMeters
+
+    /**
+     * Returns the driver station, and if none exists just returns red.
+     * This avoids an issue with crashing if the DS is not present.
+     */
+    private fun getAllianceSafe(): DriverStation.Alliance {
+        return try {
+            DriverStation.getAlliance().get()
+        } catch (_: NoSuchElementException) {
+            DriverStation.Alliance.Red
+        }
+    }
 
     object RedHub : Hub {
         override val center = Vector2(182.11.inches.asMeters, 158.84.inches.asMeters)
@@ -44,7 +57,7 @@ object FieldMapREBUILTWelded {
 
     val teamHub
         get() =
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            if (getAllianceSafe() == DriverStation.Alliance.Red) {
                 RedHub
             } else {
                 BlueHub
@@ -58,7 +71,7 @@ object FieldMapREBUILTWelded {
     }
 
     fun teamTrenches(
-        team: DriverStation.Alliance = DriverStation.getAlliance().get()
+        team: DriverStation.Alliance = getAllianceSafe()
     ): Map<TrenchPos, Trench> =
         if (team == DriverStation.Alliance.Red) {
             mapOf(Pair(TrenchPos.Bottom, BottomRedTrench), Pair(TrenchPos.Top, TopRedTrench))
@@ -124,7 +137,7 @@ object FieldMapREBUILTWelded {
     }
 
     fun getTeamAllianceArea(
-        alliance: DriverStation.Alliance = DriverStation.getAlliance().get()
+        alliance: DriverStation.Alliance = getAllianceSafe()
     ): AllianceArea {
         if (alliance == DriverStation.Alliance.Red) {
             return AllianceArea.Red
