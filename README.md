@@ -1,3 +1,5 @@
+# THIS LIBRARY HAS BEEN DEPRECATED ON 11/10/26! Thank you to all of our contributors.
+
 ## Beaverlib
 
 **What is Beaverlib?** <br>
